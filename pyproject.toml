@@ -1,0 +1,91 @@
+[project]
+name = "aiovantage_qlink"
+dynamic = ["version"]
+description = "Interact with and control Vantage QLink home automation controllers."
+readme = "README.md"
+requires-python = ">=3.10"
+license = "MIT"
+authors = [
+    {name = "Daniel Brooks", email = "bass_rock@me.com"},
+]
+classifiers = [
+    "Intended Audience :: Developers",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+]
+dependencies = [
+    "typing_extensions>=4.6.3,<5.0",
+]
+
+[project.urls]
+Documentation = "https://github.com/bassrock/aiovantageqlink#readme"
+Issues = "https://github.com/bassrock/aiovantageqlink/issues"
+Source = "https://github.com/bassrock/aiovantageqlink"
+
+[project.optional-dependencies]
+dev = [
+    "black==24.1.1",
+    "mypy==1.8.0",
+    "ruff==0.1.14",
+    "pre-commit==3.6.0",
+]
+
+[tool.hatch.version]
+path = "aiovantage_qlink/__about__.py"
+
+[[tool.hatch.envs.all.matrix]]
+python = ["3.10", "3.11", "3.12"]
+
+[tool.hatch.envs.dev]
+features = ["dev"]
+
+[tool.hatch.envs.lint]
+features = ["dev"]
+
+[tool.hatch.envs.lint.scripts]
+style = [
+  "ruff {args:.}",
+  "black --check --diff {args:.}",
+]
+fmt = [
+  "black {args:.}",
+  "ruff --fix {args:.}",
+]
+typing = "mypy {args:.}"
+
+[tool.mypy]
+strict = true
+
+[tool.black]
+target-version = ["py310"]
+skip-string-normalization = true
+
+[tool.ruff]
+target-version = "py310"
+select = [
+    "F",    # pyflakes
+    "E",    # pycodestyle errors
+    "W",    # pycodestyle warnings
+    "I",    # isort
+    "N",    # pep8-naming
+    "UP",   # pyupgrade
+    "D",    # pydocstyle
+    "C",    # flake8-comprehensions
+    "B",    # flake8-bugbear
+    "Q",    # flake8-quotes
+    "C90",  # mccabe
+]
+ignore = [
+    "E501",  # line too long, handled by black
+]
+
+[tool.ruff.isort]
+known-first-party = ["p"]
+
+[tool.ruff.mccabe]
+max-complexity = 15
+
+[tool.ruff.pydocstyle]
+convention = "google"
